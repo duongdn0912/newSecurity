@@ -18,8 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class })
-//@SpringBootApplication
-@EnableGlobalMethodSecurity(securedEnabled = true)
+//@EnableGlobalMethodSecurity(securedEnabled = true)
 public class DemoApplication {
 
 	public static void main(String[] args) {
@@ -36,19 +35,37 @@ public class DemoApplication {
             user1.setRole(Role.AMDIN);
             userRepository.save(user1);
 
-            Tag tag1 = new Tag();
-            tag1.setTagName("tag 1");
+//            Tag tag1 = new Tag();
+//            tag1.setTagName("tag 1");
 //            List<Tag> tagList = new ArrayList<>();
 //            tagList.add(tag1);
-            tagRepository.save(tag1);
+//            tagRepository.save(tag1);
 
             Todo todo1 = new Todo();
             todo1.setName("todo1");
             todo1.setDescription("this is todo 1");
             todo1.setUser(user1);
-            todo1.setTagList(new ArrayList<>());
-            todo1.getTagList().add(tag1);
+//            todo1.setTagList(new ArrayList<>());
+//            todo1.getTagList().add(tag1);
+//            todo1.setTagList(tagList);
             todoRepository.save(todo1);
+
+            Tag tag1 = new Tag();
+            tag1.setTagName("tag 1");
+//            List<Tag> tagList = new ArrayList<>();
+//            tagList.add(tag1);
+            tag1.setTodoList(new ArrayList<>());
+            tag1.getTodoList().add(todo1);
+            tagRepository.save(tag1);
+
+//            Todo todo2 = new Todo();
+//            todo2.setName("todo2");
+//            todo2.setDescription("this is todo 2");
+//            todo2.setUser(user1);
+////            todo1.setTagList(new ArrayList<>());
+////            todo1.getTagList().add(tag1);
+//            todo2.setTagList(tagList);
+//            todoRepository.save(todo2);
 
         };
     }

@@ -4,9 +4,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by dnduong on 1/12/2017.
- */
 @Entity
 @Table(name = "tag")
 public class Tag {
@@ -19,13 +16,14 @@ public class Tag {
     @Column(name = "name", nullable = false)
     private String tagName;
 
-//    @ManyToMany(mappedBy = "tagList")
+//    @ManyToMany(targetEntity = Todo.class)
 //    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(
-//            name="tag_todo",
-//            joinColumns=@JoinColumn(name="tag_id", referencedColumnName="tag_id"),
-//            inverseJoinColumns=@JoinColumn(name="todo_id", referencedColumnName="todo_id")
-//    )
+    @ManyToMany
+    @JoinTable(
+            name="tag_todo",
+            joinColumns=@JoinColumn(name="tag_id", referencedColumnName="tag_id"),
+            inverseJoinColumns=@JoinColumn(name="todo_id", referencedColumnName="todo_id")
+    )
     private List<Todo> todoList;
 
     public long getId() {
@@ -44,12 +42,6 @@ public class Tag {
         this.tagName = tagName;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name="tag_todo",
-            joinColumns=@JoinColumn(name="tag_id", referencedColumnName="tag_id"),
-            inverseJoinColumns=@JoinColumn(name="todo_id", referencedColumnName="todo_id")
-    )
     public List<Todo> getTodoList() {
         return todoList;
     }

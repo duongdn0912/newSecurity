@@ -3,9 +3,6 @@ package com.example.model;
 import javax.persistence.*;
 import java.util.List;
 
-/**
- * Created by dnduong on 1/12/2017.
- */
 @Entity
 @Table(name = "todo")
 public class Todo {
@@ -21,7 +18,9 @@ public class Todo {
     @Column(name = "desc")
     private String description;
 
-//    @ManyToMany(mappedBy = "todoList")
+//    @ManyToMany(targetEntity = Tag.class, mappedBy = "todoList")
+    @ManyToMany(mappedBy = "todoList")
+//    @ManyToMany  //Unidirectional
     private List<Tag> tagList;
 
     @ManyToOne
@@ -51,7 +50,7 @@ public class Todo {
         this.description = description;
     }
 
-    @ManyToMany(mappedBy = "todoList")
+//    @ManyToMany(mappedBy = "todoList")
     public List<Tag> getTagList() {
         return tagList;
     }
