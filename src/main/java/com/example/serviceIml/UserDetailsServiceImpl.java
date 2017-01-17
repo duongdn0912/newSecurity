@@ -1,7 +1,7 @@
 package com.example.serviceIml;
 
 
-import com.example.Repository.UserRepository;
+import com.example.repository.UserRepository;
 import com.example.model.CurrentUser;
 import com.example.model.User;
 import org.springframework.beans.factory.annotation.Autowired;

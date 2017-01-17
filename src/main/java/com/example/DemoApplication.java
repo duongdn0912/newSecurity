@@ -1,13 +1,12 @@
 package com.example;
 
-import com.example.Repository.TagRepository;
-import com.example.Repository.TodoRepository;
-import com.example.Repository.UserRepository;
+import com.example.repository.TagRepository;
+import com.example.repository.TodoRepository;
+import com.example.repository.UserRepository;
 import com.example.model.Tag;
 import com.example.model.Todo;
 import com.example.model.User;
 import com.example.utility.Role;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

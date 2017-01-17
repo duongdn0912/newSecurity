@@ -1,16 +1,14 @@
 package com.example.controller;
 
 import com.example.DTO.UserCreateForm;
-import com.example.Repository.UserRepository;
+import com.example.repository.UserRepository;
 import com.example.utility.UserCreateFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
 import java.util.NoSuchElementException;
 
 @Controller

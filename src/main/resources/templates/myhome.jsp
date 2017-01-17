@@ -6,5 +6,6 @@
 </head>
 <body>
     Home
+    <a href="/logout">logout</a>
 </body>
 </html>

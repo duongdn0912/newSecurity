@@ -1,11 +1,19 @@
 package com.example.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "tag")
+@Data
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Tag {
 
     @Id
@@ -14,6 +22,7 @@ public class Tag {
     private long id;
 
     @Column(name = "name", nullable = false)
+    @NonNull
     private String tagName;
 
 //    @ManyToMany(targetEntity = Todo.class)
@@ -24,38 +33,7 @@ public class Tag {
             joinColumns=@JoinColumn(name="tag_id", referencedColumnName="tag_id"),
             inverseJoinColumns=@JoinColumn(name="todo_id", referencedColumnName="todo_id")
     )
+    @NonNull
     private List<Todo> todoList;
-
-    public Tag() {
-    }
-
-    public Tag(String tagName, List<Todo> todoList) {
-        this.tagName = tagName;
-        this.todoList = todoList;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getTagName() {
-        return tagName;
-    }
-
-    public void setTagName(String tagName) {
-        this.tagName = tagName;
-    }
-
-    public List<Todo> getTodoList() {
-        return todoList;
-    }
-
-    public void setTodoList(List<Todo> todoList) {
-        this.todoList = todoList;
-    }
 
 }

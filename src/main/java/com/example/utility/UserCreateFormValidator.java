@@ -1,19 +1,19 @@
 package com.example.utility;
 
 import com.example.DTO.UserCreateForm;
-import com.example.Repository.UserRepository;
+import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 @Component
-public class UserCreateFormValidator implements Validator{
+public class UserCreateFormValidator implements Validator {
 
     private final UserRepository userRepository;
 
     @Autowired
-    public UserCreateFormValidator(UserRepository userRepository){
+    public UserCreateFormValidator(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

@@ -9,7 +9,7 @@
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <div>
             <label for="email">Email address</label>
-            <input type="email" name="email" id="email" required="required" autofocus="true">
+            <input type="text" name="email" id="email" required="required" autofocus="true">
         </div>
         <div>
             <label for="password">Password</label>
