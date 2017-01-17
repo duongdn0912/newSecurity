@@ -26,6 +26,15 @@ public class Todo {
     @ManyToOne
     private User user;
 
+    public Todo() {
+    }
+
+    public Todo(String name, String description, User user) {
+        this.name = name;
+        this.description = description;
+        this.user = user;
+    }
+
     public long getId() {
         return id;
     }
@@ -50,7 +59,7 @@ public class Todo {
         this.description = description;
     }
 
-//    @ManyToMany(mappedBy = "todoList")
+    //    @ManyToMany(mappedBy = "todoList")
     public List<Tag> getTagList() {
         return tagList;
     }

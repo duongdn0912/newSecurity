@@ -26,6 +26,14 @@ public class Tag {
     )
     private List<Todo> todoList;
 
+    public Tag() {
+    }
+
+    public Tag(String tagName, List<Todo> todoList) {
+        this.tagName = tagName;
+        this.todoList = todoList;
+    }
+
     public long getId() {
         return id;
     }

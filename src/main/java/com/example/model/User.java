@@ -5,12 +5,8 @@ import com.example.utility.Role;
 import javax.persistence.*;
 import java.util.List;
 
-/**
- * Created by dnduong on 1/10/2017.
- */
-
 @Entity
-@Table(name="user")
+@Table(name = "user")
 public class User {
 
     @Id
@@ -20,6 +16,15 @@ public class User {
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
+
+    public User() {
+    }
+
+    public User(String email, String password_hash, Role role) {
+        this.email = email;
+        this.password_hash = password_hash;
+        this.role = role;
+    }
 
     @Column(name = "password_hash", nullable = false)
     private String password_hash;
@@ -69,4 +74,5 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
+
 }

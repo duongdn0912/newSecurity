@@ -5,9 +5,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
 
-/**
- * Created by dnduong on 1/10/2017.
- */
 public class UserCreateForm {
 
     @NotEmpty
@@ -53,4 +50,5 @@ public class UserCreateForm {
     public void setRole(Role role) {
         this.role = role;
     }
+
 }

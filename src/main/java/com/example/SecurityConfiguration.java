@@ -7,9 +7,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
-/**
- * Created by dnduong on 1/11/2017.
- */
 @Configuration
 //@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 @EnableWebSecurity
@@ -18,9 +15,13 @@ class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/api").permitAll();
+//        http.authorizeRequests().antMatchers("/api").permitAll();
+//        http.authorizeRequests().antMatchers("/nice").permitAll().and()
+//                .authorizeRequests().antMatchers("/console/**").permitAll();
+//
+//        http.csrf().disable();
+//        http.headers().frameOptions().disable();
         http.authorizeRequests()
-//                .antMatchers("/**").fullyAuthenticated()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

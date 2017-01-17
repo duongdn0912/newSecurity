@@ -1,7 +1,7 @@
 package com.example.utility;
 
 import com.example.DTO.UserCreateForm;
-import com.example.services.UserService;
+import com.example.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -14,11 +14,11 @@ import org.springframework.validation.Validator;
 @Component
 public class UserCreateFormValidator implements Validator{
 
-    private final UserService userService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public UserCreateFormValidator(UserService userService){
-        this.userService = userService;
+    public UserCreateFormValidator(UserRepository userRepository){
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class UserCreateFormValidator implements Validator{
     }
 
     private void validateEmail(Errors errors, UserCreateForm form) {
-        if (userService.getUserByEmail(form.getEmail()).isPresent()) {
+        if (userRepository.findByEmail(form.getEmail()).isPresent()) {
             errors.reject("email.exists", "User with this email already exists");
         }
     }

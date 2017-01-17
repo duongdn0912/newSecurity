@@ -8,10 +8,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
 
-/**
- * Created by dnduong on 1/10/2017.
- */
-
 @Controller
 public class LoginController {
 
