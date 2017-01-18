@@ -1,15 +1,18 @@
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <sec:authorize access="isAuthenticated()">
+        <% response.sendRedirect("/"); %>
+    </sec:authorize>
     <meta charset="UTF-8"/>
     <title>Login page</title>
 </head>
 <body>
     <form role="form" action="/login" method="post">
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <div>
             <label for="email">Email address</label>
-            <input type="email" name="email" id="email" required="required" autofocus="true">
+            <input type="text" name="email" id="email" required="required" autofocus="autofocus">
         </div>
         <div>
             <label for="password">Password</label>

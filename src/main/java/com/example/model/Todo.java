@@ -1,10 +1,21 @@
 package com.example.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "todo")
+@Data
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Todo {
 
     @Id
@@ -13,66 +24,20 @@ public class Todo {
     private long id;
 
     @Column(name = "name", nullable = false)
+    @NonNull
     private String name;
 
     @Column(name = "desc")
+    @NonNull
     private String description;
 
-//    @ManyToMany(targetEntity = Tag.class, mappedBy = "todoList")
-    @ManyToMany(mappedBy = "todoList")
-//    @ManyToMany  //Unidirectional
-    private List<Tag> tagList;
+    @ManyToMany(mappedBy = "todos")
+    @JsonManagedReference
+    private List<Tag> tags;
 
     @ManyToOne
+    @NonNull
+    @JsonBackReference
     private User user;
 
-    public Todo() {
-    }
-
-    public Todo(String name, String description, User user) {
-        this.name = name;
-        this.description = description;
-        this.user = user;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    //    @ManyToMany(mappedBy = "todoList")
-    public List<Tag> getTagList() {
-        return tagList;
-    }
-
-    public void setTagList(List<Tag> tagList) {
-        this.tagList = tagList;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }
