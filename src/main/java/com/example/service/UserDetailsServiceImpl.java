@@ -1,4 +1,4 @@
-package com.example.serviceIml;
+package com.example.service;
 
 
 import com.example.repository.UserRepository;
@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("User with email=%s was not found", email)));
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
-                user.getPassword_hash(),
+                user.getPasswordHash(),
                 AuthorityUtils.createAuthorityList(user.getRole().toString()));
     }
 }

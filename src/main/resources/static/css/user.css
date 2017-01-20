@@ -1,0 +1,12 @@
+.mt5 {
+    margin-top: 5px;
+}
+a {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+.deleteTag:hover {
+    text-decoration: line-through;
+}

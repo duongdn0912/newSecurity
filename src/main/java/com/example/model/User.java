@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
@@ -25,14 +25,15 @@ public class User {
 
     @Column(name = "password_hash", nullable = false)
     @NonNull
-    private String password_hash;
+    private String passwordHash;
 
     @Column(name = "role")
     @NonNull
+    @Enumerated(value = EnumType.STRING)
     private Role role;
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
-    private List<Todo> todoList;
+    private List<Todo> todos;
 
 }
