@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Controller
 public class MainController {
@@ -93,7 +90,7 @@ public class MainController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String loggedUserName = auth.getName();
 
-        return userRepository.findByEmail(loggedUserName).get();
+        return userRepository.findByEmail(loggedUserName).orElse(null);
     }
 
     private void addTag(String tagName, Long todoId) {
@@ -118,7 +115,7 @@ public class MainController {
         tags.remove(tags.stream()
                     .filter(tag -> tag.getId() == tagId)
                     .findFirst()
-                    .get());
+                    .orElse(null));
 
         return todoRepository.save(todo) != null;
     }
