@@ -1,12 +1,21 @@
 var tagToAddData = [];
+var tagsUpdate = [];
 
 $("#addTodo").click(function () {
-    $.post("/add",
+    var todo = $('#todoToAdd').val();
+    if(todo == '') {
+        alert('input the todo');
+        return;
+    }
+    tagToAddData.length > 0 ? tagToAddData : tags = tagToAddData.push($("#tagToAdd").val());
+    $.post('/add',
         {
-            todo: $('#todoToAdd').val(),
+            todo: todo,
             tagName: tagToAddData
-        }, function (data, status) {
-            if (status == "success") {
+        }
+        , function (data, status) {
+            if (status == 'success') {
+                tagToAddData.pop();
                 window.location.reload();
             }
         });
@@ -14,20 +23,23 @@ $("#addTodo").click(function () {
 
 function showInfo(info) {
     var _this = this;
-    $.get("/todo/" + info
+    $.get('/todo/' + info
         , function (data, status) {
-            if (status == "success") {
-                $("#updateArea" + info).append(data);
+            if (status == 'success') {
+                removeInfoDiv();
+                $('#updateArea' + info).append(data);
             }
         })
 }
 
 function updateData(todoId) {
-    $.post("/update",
+    tagsUpdate.length > 0 ? tagsUpdate : tags = tagsUpdate.push($("#todoTagUpdate").val());
+    $.post('/update',
         {
             todoId: todoId,
             todoName: $('#todoName').val(),
             todoDesc: $('#todoDesc').val(),
+            tagNames: tagsUpdate
         }
         , function (data, status) {
             window.location.reload();
@@ -35,7 +47,7 @@ function updateData(todoId) {
 }
 
 function deleteTodo(todo) {
-    $.post("/deleteTodo",
+    $.post('/deleteTodo',
         {
             todoId: todo
         }, function (data, status) {
@@ -45,9 +57,35 @@ function deleteTodo(todo) {
         });
 }
 
-$("#addTagToTodo").click(function(){
-    var tag = $("#tagToAdd").val();
-    tagToAddData.push(tag);
-    $("#tags").append(tag);
-    $("#tagToAdd").val("");
+$('#addTagToTodo').click(function () {
+    var tagInfo = '#tagToAdd';
+    var place = '#tags';
+    addTag(tagInfo, tagToAddData, place, tagToAddData);
 });
+
+function addTagUpdate() {
+    var allTagData = [];
+    $('.tags').each(function () {
+        allTagData.push($( this ).text());
+    });
+    var tagInfo = '#todoTagUpdate';
+    var place = '#newUpdateTag';
+    addTag(tagInfo, allTagData, place, tagsUpdate);
+}
+
+function addTag(tagInfo, oldTags, place, tagList) {
+    var tag = $(tagInfo).val();
+    if (jQuery.inArray(tag, oldTags) != -1) {
+        alert('duplicate tag is not valid');
+        return;
+    }
+    tagList.push(tag);
+    $(place).append('<a href="/" class="deleteTag">' + tag + '</a>').append('  ');
+    $(tagInfo).val('');
+}
+
+function removeInfoDiv() {
+    if($('#updatePopupDiv')){
+        this.remove();
+    }
+}

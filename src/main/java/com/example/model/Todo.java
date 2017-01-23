@@ -6,8 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
@@ -30,7 +34,12 @@ public class Todo {
     @NonNull
     private String description;
 
-    @ManyToMany(mappedBy = "todos")
+    @ManyToMany
+    @JoinTable(
+            name = "todo_tag",
+            joinColumns = @JoinColumn(name = "todoId", referencedColumnName = "todo_id"),
+            inverseJoinColumns = @JoinColumn(name = "tagId", referencedColumnName = "tag_id")
+    )
     @JsonManagedReference
     private List<Tag> tags;
 

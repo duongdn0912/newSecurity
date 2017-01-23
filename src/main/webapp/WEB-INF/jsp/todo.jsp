@@ -8,7 +8,7 @@
     <input id="addTagUpdate" type="button" value="+ TAG" onclick="addTagUpdate()">
 
     <c:forEach var="tag" items="${todo.tags}">
-        <a href="/" class="deleteTag tags">${tag.tagName}</a>
+        <a href="/" class="deleteTag tags" onclick="deleteTagOnTodo(${todo.id}, ${tag.id})">${tag.tagName}</a>
     </c:forEach>
 
     <input type="button" id="buttonToDoUpdate" value="update" onclick="updateData(${todo.id})">

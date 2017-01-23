@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Controller
 public class MainController {
@@ -38,9 +41,9 @@ public class MainController {
         todoInfo.setUser(user);
         todoInfo.setName(todo);
         todoInfo.setDescription(todo);
-        Todo todoSave = todoRepository.save(todoInfo);
-        tagNames.forEach(tagName -> addTag(tagName, todoSave.getId()));
-        return todoSave;
+        Todo todoSaved = todoRepository.save(todoInfo);
+        tagNames.forEach(tagName -> addTag(tagName, todoSaved.getId()));
+        return todoSaved;
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -48,7 +51,7 @@ public class MainController {
     public Todo updateTodo(@RequestParam Long todoId,
                            @RequestParam String todoName,
                            @RequestParam String todoDesc,
-                           @RequestParam (value = "tagNames[]") List<String> tagNames) {
+                           @RequestParam(value = "tagNames[]") List<String> tagNames) {
         Todo toUpdate = todoRepository.findOne(todoId);
         toUpdate.setName(todoName);
         toUpdate.setDescription(todoDesc);
@@ -74,6 +77,18 @@ public class MainController {
         todoRepository.delete(todoId);
     }
 
+    @RequestMapping(value = "/deleteTag", method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean deleteTag(@RequestParam Long todoId, @RequestParam Long tagId) {
+        return removeTagInTodo(todoId, tagId);
+    }
+
+    @RequestMapping(value = "/deleteTag/{todoId}/{tagId}", method = RequestMethod.GET)
+    @ResponseBody
+    public Boolean deleteTagGet(@PathVariable Long todoId, @PathVariable Long tagId) {
+        return removeTagInTodo(todoId, tagId);
+    }
+
     private User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String loggedUserName = auth.getName();
@@ -82,20 +97,30 @@ public class MainController {
     }
 
     private void addTag(String tagName, Long todoId) {
-        Todo todoOwnTag = todoRepository.findOne(todoId);
-        List<Todo> todos;
         Tag tagToAdd = tagRepository.findOneByTagName(tagName);
-        if(tagToAdd == null) {
+        if (tagToAdd == null) {
             tagToAdd = new Tag();
             tagToAdd.setTagName(tagName);
-            todos = new ArrayList<>();
-            todos.add(todoOwnTag);
-            tagToAdd.setTodos(todos);
-        } else {
-            tagToAdd.getTodos().add(todoOwnTag);
         }
+        Tag tagSaved = tagRepository.save(tagToAdd);
 
-        tagRepository.save(tagToAdd);
+        Todo todoOwnTag = todoRepository.findOne(todoId);
+        if (todoOwnTag.getTags() == null) {
+            todoOwnTag.setTags(new ArrayList<>());
+        }
+        todoOwnTag.getTags().add(tagSaved);
+        todoRepository.save(todoOwnTag);
+    }
+
+    private Boolean removeTagInTodo(Long todoId, Long tagId) {
+        Todo todo = todoRepository.findOne(todoId);
+        List<Tag> tags = todo.getTags();
+        tags.remove(tags.stream()
+                    .filter(tag -> tag.getId() == tagId)
+                    .findFirst()
+                    .get());
+
+        return todoRepository.save(todo) != null;
     }
 
 }

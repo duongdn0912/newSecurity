@@ -23,7 +23,6 @@
         <td id="tags"></td>
         <td><input type="button" id="addTodo" value="ADD"></td>
     </tr>
-
     <tr>
         <td>ID</td>
         <td>Name</td>
@@ -97,7 +96,9 @@
                 tagNames: tagsUpdate
             }
             , function (data, status) {
-                window.location.reload();
+                if (status == "success") {
+                    window.location.reload();
+                }
             });
     }
 
@@ -106,9 +107,9 @@
             {
                 todoId: todo
             }, function (data, status) {
-
-                window.location.reload();
-
+                if (status == "success") {
+                    window.location.reload();
+                }
             });
     }
 
@@ -137,6 +138,18 @@
         tagList.push(tag);
         $(place).append('<a href="/" class="deleteTag">' + tag + '</a>').append("  ");
         $(tagInfo).val("");
+    }
+
+    function deleteTagOnTodo(todoId, tagId) {
+        $.post("/deleteTag",
+            {
+                todoId: todoId,
+                tagId: tagId
+            }, function (data, status) {
+                if (status == "success") {
+                    window.location.reload();
+                }
+            });
     }
 
 </script>

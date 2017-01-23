@@ -1,6 +1,7 @@
 package com.example.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,12 +23,7 @@ public class Tag {
     @NonNull
     private String tagName;
 
-    @ManyToMany
-    @JoinTable(
-            name = "tag_todo",
-            joinColumns = @JoinColumn(name = "tagId", referencedColumnName = "tag_id"),
-            inverseJoinColumns = @JoinColumn(name = "todoId", referencedColumnName = "todo_id")
-    )
+    @ManyToMany(mappedBy = "tags")
     @NonNull
     @JsonBackReference
     private List<Todo> todos;
